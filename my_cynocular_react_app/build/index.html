@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cynocular </title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <link href="https://fonts.googleapis.com/css2?family=Lobster&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <img src="{{ url_for('static', filename='binocular-icon.png') }}" alt="Binocular Icon" id="binocular-icon">
+    <div class="header-text">
+      
+    </div>
+    <img src="{{ url_for('static', filename='login-icon.png') }}" alt="Login Icon" id="login-icon">
+  </header>
+  
+  <!-- Hidden Sign In Form -->
+  <div class="signin-container" id="signin-form" style="display: none;">
+    <h2>Sign In</h2>
+    <input type="text" placeholder="Username or Email">
+    <input type="password" placeholder="Password">
+    <div class="auth-buttons">
+      <button>Sign In</button>
+      <button>Register</button>
+    </div>
+  </div>
+  
+  <!-- Input and Drag-and-Drop Container -->
+  <div class="input-container">
+    <textarea placeholder="Enter IP, Hash, URL, and Queries etc." class="input-prompt" rows="4"></textarea>
+    <div class="file-upload-container">
+      <input type="file" id="file-upload" class="file-upload-input" multiple>
+      <label for="file-upload" class="file-upload-label">Choose files or drag them here</label>
+    </div>
+    <button>Submit</button>
+  </div>
+
+  <script>
+    // Toggle sign-in form visibility
+    document.getElementById('login-icon').addEventListener('click', function() {
+      var form = document.getElementById('signin-form');
+      if (form.style.display === 'none' || form.style.display === '') {
+        form.style.display = 'block';
+      } else {
+        form.style.display = 'none';
+      }
+    });
+
+    // Drag-and-Drop File Upload
+    const fileInput = document.getElementById('file-upload');
+    const fileLabel = document.querySelector('.file-upload-label');
+    const inputContainer = document.querySelector('.file-upload-container');
+
+    inputContainer.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      fileLabel.classList.add('dragover');
+    });
+
+    inputContainer.addEventListener('dragleave', () => {
+      fileLabel.classList.remove('dragover');
+    });
+
+    inputContainer.addEventListener('drop', (e) => {
+      e.preventDefault();
+      fileLabel.classList.remove('dragover');
+      fileInput.files = e.dataTransfer.files; // Assign dropped files to input
+    });
+  </script>
+  <script src="App.js"></script>
+</body>
+</html>
